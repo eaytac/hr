@@ -65,6 +65,7 @@ public class BolumService implements IBaseService<Bolum> {
             criteria.addOrder(Order.asc("id"));
             list = criteria.list();
         }
+        session.close();
         return list;
     }
 
@@ -74,7 +75,9 @@ public class BolumService implements IBaseService<Bolum> {
         Criteria criteria = session.createCriteria(Bolum.class);
         criteria.add(Restrictions.eq("id", id));
 
-        return (Bolum) criteria.uniqueResult();
+        Bolum bolum = (Bolum) criteria.uniqueResult();
+        session.close();
+        return bolum;
     }
     
 }

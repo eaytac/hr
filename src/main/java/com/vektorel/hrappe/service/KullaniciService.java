@@ -64,7 +64,9 @@ public class KullaniciService implements  IBaseService<Kullanici>{
                     Restrictions.ilike("adSoyad", query,MatchMode.ANYWHERE)));
         }
         criteria.addOrder(Order.asc("id"));
-        return criteria.list();
+        List l = criteria.list();
+        session.close();
+        return l;
     }
 
     @Override
@@ -80,6 +82,8 @@ public class KullaniciService implements  IBaseService<Kullanici>{
         Criteria criteria = session.createCriteria(Kullanici.class);
         criteria.add(Restrictions.eq("username", username));
         criteria.add(Restrictions.eq("pass", pass));
-        return (Kullanici) criteria.uniqueResult();
+        Kullanici k = (Kullanici) criteria.uniqueResult();
+        session.close();
+        return k;
     }
 }

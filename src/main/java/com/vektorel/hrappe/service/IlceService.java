@@ -91,6 +91,7 @@ public class IlceService implements IBaseService<Ilce> {
             criteria.addOrder(Order.asc("id"));
             list = criteria.list();
         }
+        session.close();
         return list;
     }
 
@@ -100,7 +101,9 @@ public class IlceService implements IBaseService<Ilce> {
         Criteria criteria = session.createCriteria(Ilce.class);
         criteria.add(Restrictions.eq("id", id));
 
-        return (Ilce) criteria.uniqueResult();
+        Ilce ilce = (Ilce) criteria.uniqueResult();
+        session.close();
+        return ilce;
     }
 
 }

@@ -79,7 +79,9 @@ public class IlService implements IBaseService<Il> {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Il.class);
         criteria.addOrder(Order.asc("id"));
-        return criteria.list();
+        List l = criteria.list();
+        session.close();
+        return l;
     }
 
     @Override
@@ -96,7 +98,9 @@ public class IlService implements IBaseService<Il> {
         Criteria criteria = session.createCriteria(Il.class);
         criteria.add(Restrictions.eq("ad", ad));
 
-        return (Il) criteria.uniqueResult();
+        Il il = (Il) criteria.uniqueResult();
+        session.close();
+        return il;
     }
 
 }

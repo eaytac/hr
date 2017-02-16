@@ -54,7 +54,9 @@ public class OkulService implements IBaseService<Okul> {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Okul.class);
         criteria.addOrder(Order.asc("id"));
-        return criteria.list();
+        List l = criteria.list();
+        session.close();
+        return l;
     }
 
     @Override
@@ -71,7 +73,9 @@ public class OkulService implements IBaseService<Okul> {
         Criteria criteria = session.createCriteria(Okul.class);
         criteria.add(Restrictions.eq("kod", kod));
 
-        return (Okul) criteria.uniqueResult();
+        Okul okul = (Okul) criteria.uniqueResult();
+        session.close();
+        return okul;
     }
     
 }

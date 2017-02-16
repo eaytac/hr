@@ -53,7 +53,7 @@ Contributor(s):
     
     <mapping class="com.vektorel.hrappe.entity.Adres"></mapping>
     <mapping class="com.vektorel.hrappe.entity.EBase"></mapping>
-    <!--<mapping class="com.vektorel.hrappe.entity.Cinsiyet"></mapping>-->
+    <mapping class="com.vektorel.hrappe.entity.Cinsiyet"></mapping>
     <mapping class="com.vektorel.hrappe.entity.Kisi"></mapping>
     <mapping class="com.vektorel.hrappe.entity.Bolum"></mapping>
     <mapping class="com.vektorel.hrappe.entity.Okul"></mapping>

@@ -13,6 +13,7 @@ import com.vektorel.hrappe.service.BolumService;
 import com.vektorel.hrappe.service.CvService;
 import com.vektorel.hrappe.service.IlService;
 import com.vektorel.hrappe.service.IlceService;
+import com.vektorel.hrappe.service.KisiService;
 import com.vektorel.hrappe.service.OkulService;
 import com.vektorel.hrappe.util.DefaultComboModel;
 import java.awt.Image;
@@ -64,7 +65,7 @@ public class frmCvEkle extends javax.swing.JFrame {
         txtTCKimlikNo.setText(cv.getKisi().getTc().toString());
         txtDogumTarihi.setDate(cv.getKisi().getDogumTarihi());
 
-        JComboBox<Cinsiyet> cmbCinsiyet = new JComboBox(); //BU KISIM ÇALIŞMIYOR!!
+        JComboBox<Cinsiyet> cmbCinsiyet = new JComboBox();
         cmbCinsiyet.setModel(new DefaultComboBoxModel(cv.getKisi().getCinsiyet().values()));
 
         txtAdres.setText(cv.getKisi().getAcikAdres());
@@ -334,33 +335,33 @@ public class frmCvEkle extends javax.swing.JFrame {
             Date date = new Date();
             
             Kisi k = new Kisi();
-            //KisiService ks = new KisiService();
+            KisiService ks = new KisiService();
             k.setAd(txtAd.getText());
             k.setSoyad(txtSoyad.getText());
             k.setTc(new Long(txtTCKimlikNo.getText()));
             k.setDogumTarihi(txtDogumTarihi.getDate());
-            //k.setCinsiyet(cmbCinsiyet.getSelectedIndex());
-            //ks.add(k);
             
+            DefaultComboModel secilenCinsiyet = (DefaultComboModel) cmbCinsiyet.getSelectedItem();
+            Cinsiyet c = Cinsiyet.getEnum(secilenCinsiyet.getValue().intValue());
+            k.setCinsiyet(c);
+            ks.save(k);
+            cv.setKisi(k);
             
-            Adres a = new Adres();
-            //AdresService as = new AdresService();
-            a.setEposta(txtEposta.getText());
-            a.setAcikAdres(txtAdres.getText());
+            Adres adres = new Adres();
+            adres.setEposta(txtEposta.getText());
+            adres.setAcikAdres(txtAdres.getText());
             
             DefaultComboModel secilenIl = (DefaultComboModel) cmbIl.getSelectedItem();
             IlService ilService = new IlService();
             Il il = ilService.getById(secilenIl.getValue());
-            a.setIl(il);
+            adres.setIl(il);
             
             DefaultComboModel secilenIlce = (DefaultComboModel) cmbIlce.getSelectedItem();
             IlceService ilceService = new IlceService();
             Ilce ilce = ilceService.getById(secilenIlce.getValue());
-            a.setIlce(ilce);
-                
-//            a.setIl(cmbIl.getSelectedIndex());
-//            a.setIlce(cmbIlce.getSelectedIndex());            
-            //as.add(a);
+            adres.setIlce(ilce);
+            
+            cv.setAdres(adres);
 
             cv.setCvTanimi(txtCvTanimi.getText());
             
@@ -368,8 +369,17 @@ public class frmCvEkle extends javax.swing.JFrame {
                 cv.setCvEklenmeTarihi(date); // Formun kaydedildiği tarih iş başvuru tarihi olarak kabul edilecek!
             }
            
-
-//            cv.setOkul(cmbOkul.getSelectedIndex());
+            DefaultComboModel secilenOkul = (DefaultComboModel) cmbOkul.getSelectedItem();
+            OkulService okulService = new OkulService();
+            Okul okul = okulService.getById(secilenOkul.getValue());
+            okul.setId(okul.getId());
+            cv.setOkul(okul);
+            
+            DefaultComboModel secilenBolum = (DefaultComboModel) cmbBolum.getSelectedItem();
+            BolumService bolumService = new BolumService();
+            Bolum bolum = bolumService.getById(secilenBolum.getValue());
+            bolum.setId(bolum.getId());
+            cv.setBolum(bolum);
 
             //Fotoğrafı veritabanına kaydetme aşamaları
             FileInputStream fileInputStream = new FileInputStream(fotografDosyaAdresi);
