@@ -19,6 +19,7 @@ import com.vektorel.hrappe.util.DefaultComboModel;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
+import static java.lang.Math.toIntExact;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,7 +27,6 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -56,6 +56,9 @@ public class frmCvEkle extends javax.swing.JFrame {
     public frmCvEkle(Cv cv) {
         initComponents();
         setLocationRelativeTo(null);
+        comboInit();
+        IlAdlariCBDoldur();
+        okulAdlariCBDoldur();
 
         txtCvTanimi.setText(cv.getCvTanimi());
         lblId.setText(cv.getId().toString());
@@ -65,14 +68,20 @@ public class frmCvEkle extends javax.swing.JFrame {
         txtTCKimlikNo.setText(cv.getKisi().getTc().toString());
         txtDogumTarihi.setDate(cv.getKisi().getDogumTarihi());
 
-        JComboBox<Cinsiyet> cmbCinsiyet = new JComboBox();
-        cmbCinsiyet.setModel(new DefaultComboBoxModel(cv.getKisi().getCinsiyet().values()));
+        Cinsiyet c = Cinsiyet.getEnum(cv.getKisi().getCinsiyet().ordinal());
+        cmbCinsiyet.setSelectedItem(c);
 
-        txtAdres.setText(cv.getKisi().getAcikAdres());
+        txtAdres.setText(cv.getAdres().getAcikAdres());
 
-//        cmbIl.setSelectedIndex(toIntExact(cv.getIl().getId()) - 1);
-//        cmbIlce.setSelectedIndex(toIntExact(cv.getIlce().getId()) - 1);
-//        cmbOkul.setSelectedIndex(toIntExact(cv.getOkul().getId()) - 1);
+        cmbIl.setSelectedIndex(toIntExact(cv.getAdres().getIl().getId()) - 1);
+        IlceAdlariCBDoldur(null);
+        cmbIlce.setSelectedIndex(toIntExact(cv.getAdres().getIlce().getId()) - 1);
+        
+        int okulKod = toIntExact(cv.getOkul().getKod()) - 1;
+        cmbOkul.setSelectedIndex(okulKod);
+        bolumAdlariCBDoldur(null);
+        cmbBolum.setSelectedIndex(toIntExact(cv.getBolum().getId()) - 1);
+        
         Fotograf fotograf = cv.getFotograf();
         byte[] foto = fotograf.getImage();
         ImageIcon image = new ImageIcon(foto);
@@ -148,11 +157,6 @@ public class frmCvEkle extends javax.swing.JFrame {
         cmbIl.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbIlItemStateChanged(evt);
-            }
-        });
-        cmbIl.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                cmbIlPropertyChange(evt);
             }
         });
 
@@ -424,10 +428,6 @@ public class frmCvEkle extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFotografSecActionPerformed
 
-    private void cmbIlPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cmbIlPropertyChange
-      
-    }//GEN-LAST:event_cmbIlPropertyChange
-
     private void cmbIlItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbIlItemStateChanged
         String il = String.valueOf(cmbIl.getSelectedIndex()+1);
         IlceAdlariCBDoldur(il);
@@ -436,8 +436,8 @@ public class frmCvEkle extends javax.swing.JFrame {
     private void cmbOkulItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbOkulItemStateChanged
         DefaultComboModel secilenOkul = (DefaultComboModel) cmbOkul.getSelectedItem();
         OkulService okulService = new OkulService();
-        Okul okul = okulService.getByKod(secilenOkul.getValue());
-        bolumAdlariCBDoldur((okul.getKod()).toString());
+        Okul okul = okulService.getById(secilenOkul.getValue());
+        bolumAdlariCBDoldur((okul.getId()).toString());
     }//GEN-LAST:event_cmbOkulItemStateChanged
 
     public ImageIcon ResizeImage(String fotografKonumu) {

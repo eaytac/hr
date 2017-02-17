@@ -22,7 +22,8 @@ public class frmCvListesi extends javax.swing.JFrame {
     public frmCvListesi() {
         initComponents();
         setLocationRelativeTo(null);
-        pnlCvListesi.setVisible(false);
+        //pnlCvListesi.setVisible(false);
+        cvTabloDoldur(null);
 
     }
 
@@ -48,10 +49,10 @@ public class frmCvListesi extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCvListesi = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        mnuCvIslemleri = new javax.swing.JMenu();
         mnuCvListesi = new javax.swing.JMenuItem();
         mnuCvEkle = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mnuCvSil = new javax.swing.JMenuItem();
         mnuCvGuncelle = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -84,7 +85,7 @@ public class frmCvListesi extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("CV İşlemleri");
+        mnuCvIslemleri.setText("CV İşlemleri");
 
         mnuCvListesi.setText("Cv Listesi");
         mnuCvListesi.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +93,7 @@ public class frmCvListesi extends javax.swing.JFrame {
                 mnuCvListesiActionPerformed(evt);
             }
         });
-        jMenu1.add(mnuCvListesi);
+        mnuCvIslemleri.add(mnuCvListesi);
 
         mnuCvEkle.setText("CV Ekle");
         mnuCvEkle.addActionListener(new java.awt.event.ActionListener() {
@@ -100,15 +101,15 @@ public class frmCvListesi extends javax.swing.JFrame {
                 mnuCvEkleActionPerformed(evt);
             }
         });
-        jMenu1.add(mnuCvEkle);
+        mnuCvIslemleri.add(mnuCvEkle);
 
-        jMenuItem1.setText("CV Sil");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        mnuCvSil.setText("CV Sil");
+        mnuCvSil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                mnuCvSilActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        mnuCvIslemleri.add(mnuCvSil);
 
         mnuCvGuncelle.setText("CV Güncelle");
         mnuCvGuncelle.addActionListener(new java.awt.event.ActionListener() {
@@ -116,9 +117,9 @@ public class frmCvListesi extends javax.swing.JFrame {
                 mnuCvGuncelleActionPerformed(evt);
             }
         });
-        jMenu1.add(mnuCvGuncelle);
+        mnuCvIslemleri.add(mnuCvGuncelle);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(mnuCvIslemleri);
 
         setJMenuBar(jMenuBar1);
 
@@ -152,7 +153,7 @@ public class frmCvListesi extends javax.swing.JFrame {
         cvTabloDoldur(null);
     }//GEN-LAST:event_mnuCvEkleActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void mnuCvSilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCvSilActionPerformed
         if (tblCvListesi.getSelectedRowCount()> 1){
             JOptionPane.showMessageDialog(rootPane, "Lütfen sadece bir adet kayıt seçiniz!", "Fazla Kayıt Seçildi", JOptionPane.WARNING_MESSAGE);
             return;
@@ -170,7 +171,7 @@ public class frmCvListesi extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(rootPane, "Lütfen silmek istediğiniz kaydı tablodan seçiniz!", "Kayıt Seçilmedi", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_mnuCvSilActionPerformed
 
     private void mnuCvGuncelleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCvGuncelleActionPerformed
         if (tblCvListesi.getSelectedRowCount()> 1){
@@ -190,20 +191,20 @@ public class frmCvListesi extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAktifKullanici;
     private javax.swing.JMenuItem mnuCvEkle;
     private javax.swing.JMenuItem mnuCvGuncelle;
+    private javax.swing.JMenu mnuCvIslemleri;
     private javax.swing.JMenuItem mnuCvListesi;
+    private javax.swing.JMenuItem mnuCvSil;
     private javax.swing.JPanel pnlCvListesi;
     private javax.swing.JTable tblCvListesi;
     // End of variables declaration//GEN-END:variables
 
     private void cvTabloDoldur(String query) {
-        pnlCvListesi.setVisible(true);
+        //pnlCvListesi.setVisible(true);
 
         List<Cv> cvListesi = cvService.getAll(query);
         String[][] data = new String[cvListesi.size()][3];

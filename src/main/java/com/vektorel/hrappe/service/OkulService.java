@@ -53,7 +53,7 @@ public class OkulService implements IBaseService<Okul> {
     public List<Okul> getAll(String query) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Okul.class);
-        criteria.addOrder(Order.asc("id"));
+        criteria.addOrder(Order.asc("kod"));
         List l = criteria.list();
         session.close();
         return l;
@@ -65,7 +65,9 @@ public class OkulService implements IBaseService<Okul> {
         Criteria criteria = session.createCriteria(Okul.class);
         criteria.add(Restrictions.eq("id", id));
 
-        return (Okul) criteria.uniqueResult();
+        Okul okul = (Okul) criteria.uniqueResult();
+        session.close();
+        return okul;
     }
 
     public Okul getByKod(Long kod) {
@@ -77,5 +79,4 @@ public class OkulService implements IBaseService<Okul> {
         session.close();
         return okul;
     }
-    
 }

@@ -1,6 +1,7 @@
 package com.vektorel.hrappe;
 
 import com.vektorel.hrappe.ui.frmCvEkle;
+import com.vektorel.hrappe.ui.frmCvListesi;
 import com.vektorel.hrappe.ui.frmLogin;
 
 /**
@@ -15,7 +16,10 @@ public class App {
 //        login.setLocationRelativeTo(null);
 //        login.show();
 
-        frmCvEkle cvEkle = new frmCvEkle();
-        cvEkle.setVisible(true);
+//        frmCvEkle cvEkle = new frmCvEkle();
+//        cvEkle.setVisible(true);
+        
+        frmCvListesi cvListesi = new frmCvListesi();
+        cvListesi.setVisible(true);
     }
 }

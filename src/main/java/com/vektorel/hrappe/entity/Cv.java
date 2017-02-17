@@ -42,7 +42,7 @@ public class Cv extends EBase {
     }
 
     @JoinColumn(name = "kisi_id")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     public Kisi getKisi() {
         return kisi;
     }
@@ -81,7 +81,7 @@ public class Cv extends EBase {
     }
 
     @JoinColumn(name = "okul_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     public Okul getOkul() {
         return okul;
     }
@@ -91,7 +91,7 @@ public class Cv extends EBase {
     }
 
     @JoinColumn(name = "bolum_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     public Bolum getBolum() {
         return bolum;
     }

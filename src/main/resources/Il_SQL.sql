@@ -90,4 +90,3 @@ INSERT INTO gnl_il (id, kod, ad) VALUES
 (79, '79', 'Kilis'),
 (80, '80', 'Osmaniye'),
 (81, '81', 'Düzce');
-
